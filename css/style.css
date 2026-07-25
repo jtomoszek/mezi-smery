@@ -1,0 +1,1039 @@
+/* ============================================================
+   MEZI/SMĚRY 2 — design podle šablony itconf.framer.website
+   Barvy: pozadí #F4F4F4 · růžová #FFB3C1 · modrá #0027BA
+          tmavě modrá #002099 · navy #000A32
+   Font: Space Grotesk (400/500), uppercase, letter-spacing -0.05em
+   ============================================================ */
+
+:root {
+  --bg: #F4F4F4;
+  --pink: #FFB3C1;
+  --blue: #0027BA;
+  --blue-dark: #002099;
+  --blue-deep: #001670;
+  --navy: #000A32;
+  --white: #FFFFFF;
+  --radius: 20px;
+  --radius-sm: 14px;
+  --gap: 10px;
+  --tile-h: 190px;
+  --pad: 32px;
+  --font: "Space Grotesk", sans-serif;
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+html { scroll-behavior: smooth; }
+
+body {
+  font-family: var(--font);
+  font-weight: 400;
+  background: var(--bg);
+  color: var(--blue);
+  -webkit-font-smoothing: antialiased;
+}
+
+.page {
+  max-width: 1720px;
+  margin: 0 auto;
+  padding: var(--gap);
+}
+
+/* ---------- Typografie ---------- */
+h1, h2, h3, h4 {
+  font-weight: 400;
+  text-transform: uppercase;
+  letter-spacing: -0.05em;
+  line-height: 0.92;
+}
+
+h2 {
+  font-size: clamp(40px, 5vw, 72px);
+  color: var(--blue);
+}
+
+h2.light { color: var(--pink); }
+
+.arr { display: inline-block; transition: transform .3s ease; }
+
+/* ---------- Tlačítka ---------- */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-family: var(--font);
+  font-size: 14px;
+  font-weight: 500;
+  letter-spacing: 0.02em;
+  text-transform: uppercase;
+  text-decoration: none;
+  border-radius: 999px;
+  padding: 14px 26px;
+  border: 1px solid transparent;
+  cursor: pointer;
+  transition: background .3s ease, color .3s ease, border-color .3s ease;
+}
+.btn:hover .arr { transform: translate(3px, -3px); }
+
+.btn-blue { background: var(--blue); color: var(--pink); }
+.btn-blue:hover { background: var(--blue-dark); }
+
+.btn-pink { background: var(--pink); color: var(--blue); }
+.btn-pink:hover { background: #ffc4cf; }
+
+.btn-outline { border-color: var(--blue); color: var(--blue); background: transparent; }
+.btn-outline:hover { background: var(--blue); color: var(--pink); }
+
+.btn-outline-light { border-color: var(--pink); color: var(--pink); background: transparent; }
+.btn-outline-light:hover { background: var(--pink); color: var(--blue); }
+
+/* ============================================================
+   DVOUSLOUPCOVÝ LAYOUT — levý obsah scrolluje, pravý je sticky
+   ============================================================ */
+.layout {
+  display: grid;
+  grid-template-columns: 1fr 400px;
+  gap: var(--gap);
+  align-items: start;
+}
+
+.col-main { min-width: 0; }
+
+.col-side { align-self: stretch; }
+
+.side-sticky {
+  position: sticky;
+  top: var(--gap);
+  height: calc(100dvh - 2 * var(--gap));
+  display: flex;
+  flex-direction: column;
+  gap: var(--gap);
+}
+
+/* výška hero + mezera + dlaždice = výška sticky sloupce,
+   aby spodní hrany všech čtyř boxů lícovaly */
+.hero-card {
+  background: var(--pink);
+  border-radius: var(--radius);
+  padding: 24px 32px;
+  display: flex;
+  flex-direction: column;
+  min-height: calc(100dvh - var(--tile-h) - 3 * var(--gap));
+}
+
+/* Header */
+.site-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+}
+
+.logo {
+  font-size: 22px;
+  font-weight: 500;
+  letter-spacing: -0.03em;
+  color: var(--blue);
+  text-decoration: none;
+  text-transform: uppercase;
+}
+
+.nav-pill {
+  display: flex;
+  gap: 4px;
+  border: 1px solid var(--blue);
+  border-radius: 999px;
+  padding: 6px;
+}
+
+.nav-pill a {
+  color: var(--blue);
+  text-decoration: none;
+  font-size: 13px;
+  font-weight: 500;
+  letter-spacing: 0.02em;
+  padding: 8px 16px;
+  border-radius: 999px;
+  transition: background .25s ease, color .25s ease;
+}
+.nav-pill a:hover { background: var(--blue); color: var(--pink); }
+
+/* Hero content */
+.hero-inner {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 48px 0 32px;
+}
+
+.hero-tag {
+  font-size: 15px;
+  font-weight: 500;
+  letter-spacing: 0.04em;
+  margin-bottom: 28px;
+}
+
+.hero-title {
+  font-size: clamp(52px, 8.2vw, 138px);
+  line-height: 0.88;
+  letter-spacing: -0.05em;
+  color: var(--blue);
+  display: flex;
+  flex-direction: column;
+}
+
+.hero-title .line { display: block; }
+
+/* Načítací animace hero */
+.reveal-load {
+  opacity: 0;
+  transform: translateY(40px);
+  animation: rise .9s cubic-bezier(.2,.65,.25,1) forwards;
+  animation-delay: var(--d, 0s);
+}
+@keyframes rise {
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* ---------- Boční karty ---------- */
+.side-card {
+  border-radius: var(--radius);
+  overflow: hidden;
+  text-decoration: none;
+}
+
+/* Program v kostce – duotone „foto“ */
+.side-agenda {
+  position: relative;
+  min-height: 250px;
+  display: flex;
+  align-items: flex-start;
+}
+
+.agenda-art {
+  position: absolute; inset: 0;
+  background:
+    radial-gradient(circle at 75% 20%, rgba(255,179,193,.55) 0 18%, transparent 19%),
+    radial-gradient(circle at 18% 80%, rgba(255,179,193,.3) 0 24%, transparent 25%),
+    repeating-linear-gradient(115deg, #001C86 0 26px, #0027BA 26px 52px);
+}
+
+.agenda-overlay {
+  position: absolute; inset: 0;
+  background: linear-gradient(160deg, rgba(0,39,186,.25), rgba(0,10,50,.72));
+}
+
+.side-agenda-content {
+  position: relative;
+  padding: 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.side-agenda-content h3 {
+  color: var(--white);
+  font-size: 34px;
+}
+
+/* Útržkový lístek: „Chcete být u toho?“ + REGISTRACE spojené perforací */
+.ticket-unit {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  min-height: 0;
+  position: relative;
+}
+
+/* perforace — řada kulatých dírek na švu lístku */
+.ticket-unit::after {
+  content: "";
+  position: absolute;
+  left: 36px;
+  right: 36px;
+  bottom: calc(var(--tile-h) - 4.5px);
+  height: 9px;
+  background-image: radial-gradient(circle, var(--bg) 3.2px, transparent 3.9px);
+  background-size: 13px 9px;
+  background-position: center;
+  background-repeat: repeat-x;
+  pointer-events: none;
+}
+
+/* Chcete být u toho */
+.side-ready {
+  background: var(--blue);
+  padding: 0 0 26px;
+  color: var(--pink);
+  flex: 1;
+  border-radius: var(--radius) var(--radius) 0 0;
+}
+
+.ready-art { border-radius: var(--radius-sm); overflow: hidden; margin: 16px; }
+.ready-art svg { display: block; width: 100%; height: auto; }
+
+.side-ready h3 {
+  font-size: 34px;
+  color: var(--pink);
+  padding: 0 24px 12px;
+}
+
+.side-ready p {
+  font-size: 14px;
+  line-height: 1.5;
+  color: rgba(255,179,193,.85);
+  padding: 0 24px;
+}
+
+/* Ticket — odtrhávací část se stejnou výškou jako dlaždice vlevo */
+.side-ticket {
+  position: relative;
+  background: var(--blue);
+  height: var(--tile-h);
+  flex: 0 0 var(--tile-h);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0 24px;
+  text-align: center;
+  border-radius: 0 0 var(--radius) var(--radius);
+}
+
+/* velké půlkruhové zářezy po stranách perforace */
+.side-ticket::before, .side-ticket::after {
+  content: "";
+  position: absolute;
+  top: -16px;
+  width: 32px; height: 32px;
+  border-radius: 50%;
+  background: var(--bg);
+}
+.side-ticket::before { left: -16px; }
+.side-ticket::after { right: -16px; }
+
+/* dlouhá tenká šipka podle návrhu */
+.ticket-label {
+  display: inline-flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.ticket-arrow {
+  width: 46px;
+  height: auto;
+  transition: transform .3s ease;
+}
+.side-ticket:hover .ticket-arrow { transform: translate(4px, -4px); }
+
+.ticket-label {
+  font-size: clamp(26px, 2.4vw, 38px);
+  text-transform: uppercase;
+  letter-spacing: -0.04em;
+  color: var(--pink);
+  font-weight: 500;
+  transition: letter-spacing .3s ease;
+}
+.side-ticket:hover .ticket-label { letter-spacing: 0; }
+
+/* ============================================================
+   INFO DLAŽDICE
+   ============================================================ */
+.info-tiles {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  grid-auto-rows: var(--tile-h);
+  gap: var(--gap);
+  margin-top: var(--gap);
+}
+
+.tile {
+  background: var(--blue);
+  border-radius: var(--radius);
+  padding: 24px 28px 26px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  overflow: hidden;
+}
+
+.tile-value { margin-top: auto; }
+
+.tile-label {
+  color: rgba(255,179,193,.65);
+  font-size: 14px;
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
+}
+
+.tile-value {
+  color: var(--pink);
+  font-size: clamp(22px, 2vw, 32px);
+  line-height: 1.02;
+  text-transform: uppercase;
+  letter-spacing: -0.04em;
+}
+
+/* ============================================================
+   SEKCE — společné
+   ============================================================ */
+.section { padding: 110px 24px 30px; }
+.section-slim { padding: 110px 24px 10px; }
+
+.section-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  gap: 40px;
+  margin-bottom: 56px;
+  flex-wrap: wrap;
+}
+
+.section-tag {
+  font-size: 15px;
+  font-weight: 500;
+  letter-spacing: 0.04em;
+  margin-bottom: 20px;
+  color: var(--blue);
+  text-transform: uppercase;
+}
+.section-tag.light { color: rgba(255,179,193,.7); }
+
+.section-desc {
+  max-width: 380px;
+  font-size: 15px;
+  line-height: 1.55;
+  color: rgba(0,39,186,.75);
+  padding-bottom: 8px;
+}
+
+.section-cta { align-self: flex-end; margin-bottom: 8px; }
+
+/* Scroll-reveal animace */
+.reveal {
+  opacity: 0;
+  transform: translateY(36px);
+  transition: opacity .8s cubic-bezier(.2,.65,.25,1), transform .8s cubic-bezier(.2,.65,.25,1);
+  transition-delay: var(--d, 0s);
+}
+.reveal.in { opacity: 1; transform: translateY(0); }
+
+/* ============================================================
+   PŘEDNÁŠEJÍCÍ
+   ============================================================ */
+.speakers-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: var(--gap);
+}
+
+.speaker {
+  background: var(--white);
+  border-radius: var(--radius);
+  overflow: hidden;
+  padding-bottom: 22px;
+}
+
+.speaker-photo {
+  position: relative;
+  aspect-ratio: 4 / 3.4;
+  margin: 10px;
+  border-radius: var(--radius-sm);
+  background:
+    radial-gradient(circle at 50% 118%, #0033E6 0 34%, transparent 35%),
+    radial-gradient(circle at 50% 34%, #0033E6 0 17%, transparent 18%),
+    linear-gradient(165deg, #001670, #0027BA 65%, #00113F);
+  overflow: hidden;
+}
+
+/* iniciály jako „ilustrační foto“ */
+.speaker-photo::after {
+  content: attr(data-initials);
+  position: absolute;
+  right: 14px;
+  bottom: 8px;
+  font-size: 54px;
+  letter-spacing: -0.05em;
+  color: rgba(255,179,193,.9);
+}
+
+.speaker-photo::before {
+  content: "";
+  position: absolute; inset: 0;
+  background: linear-gradient(0deg, rgba(255,179,193,.16), transparent 45%);
+  opacity: 0;
+  transition: opacity .35s ease;
+}
+.speaker:hover .speaker-photo::before { opacity: 1; }
+
+.speaker h4 {
+  font-size: 22px;
+  letter-spacing: -0.03em;
+  padding: 8px 20px 6px;
+  color: var(--blue);
+}
+
+.speaker p {
+  font-size: 13px;
+  font-weight: 500;
+  letter-spacing: 0.03em;
+  color: rgba(0,39,186,.55);
+  padding: 0 20px;
+  text-transform: uppercase;
+}
+
+/* ============================================================
+   O AKCI
+   ============================================================ */
+.about-list { border-top: 1px solid rgba(0,39,186,.25); }
+
+.about-row {
+  display: grid;
+  grid-template-columns: 140px 1fr;
+  gap: 32px;
+  padding: 40px 8px;
+  border-bottom: 1px solid rgba(0,39,186,.25);
+}
+
+.about-num {
+  font-size: 44px;
+  letter-spacing: -0.05em;
+  color: var(--blue);
+}
+
+.about-body h3 {
+  font-size: clamp(26px, 2.6vw, 38px);
+  margin-bottom: 14px;
+}
+
+.about-body p {
+  max-width: 640px;
+  font-size: 15px;
+  line-height: 1.6;
+  color: rgba(0,39,186,.75);
+}
+
+/* ============================================================
+   PARTNEŘI — modrá karta + logo dlaždice (podle šablony)
+   ============================================================ */
+.partners-block {
+  margin-top: 110px;
+  display: flex;
+  flex-direction: column;
+  gap: var(--gap);
+}
+
+.partners-card {
+  background: var(--blue);
+  border-radius: var(--radius);
+  padding: 40px 44px 48px;
+}
+
+.partners-card .section-tag { margin-bottom: 28px; }
+
+.partners-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  gap: 40px;
+  flex-wrap: wrap;
+}
+
+.partners-desc {
+  max-width: 340px;
+  font-size: 14px;
+  line-height: 1.55;
+  color: rgba(255,179,193,.8);
+}
+
+.partner-logos {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: var(--gap);
+}
+
+.partner-tile {
+  background: var(--blue);
+  border-radius: var(--radius);
+  padding: 34px 24px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--pink);
+  transition: background .3s ease;
+}
+.partner-tile:hover { background: var(--blue-dark); }
+
+.partner-tile svg {
+  width: 100%;
+  max-width: 190px;
+  height: auto;
+}
+
+/* ============================================================
+   PROGRAM
+   ============================================================ */
+.day-switch {
+  display: inline-flex;
+  gap: 4px;
+  border: 1px solid var(--blue);
+  border-radius: 999px;
+  padding: 6px;
+  margin-bottom: 40px;
+}
+
+.day-btn {
+  font-family: var(--font);
+  font-size: 14px;
+  font-weight: 500;
+  letter-spacing: 0.02em;
+  text-transform: uppercase;
+  color: var(--blue);
+  background: transparent;
+  border: 0;
+  border-radius: 999px;
+  padding: 12px 26px;
+  cursor: pointer;
+  transition: background .25s ease, color .25s ease;
+}
+.day-btn:hover { background: rgba(0,39,186,.08); }
+.day-btn.active { background: var(--blue); color: var(--pink); }
+
+.agenda { display: none; border-top: 1px solid rgba(0,39,186,.25); }
+.agenda.active { display: block; }
+
+.agenda-row {
+  display: grid;
+  grid-template-columns: 220px 1fr;
+  gap: 32px;
+  padding: 26px 8px;
+  border-bottom: 1px solid rgba(0,39,186,.25);
+  transition: background .25s ease;
+}
+.agenda-row:hover { background: rgba(0,39,186,.05); }
+
+.a-time {
+  font-size: 15px;
+  font-weight: 500;
+  letter-spacing: 0.02em;
+  color: rgba(0,39,186,.6);
+  padding-top: 6px;
+  white-space: nowrap;
+}
+
+.a-body h4 {
+  font-size: clamp(20px, 2vw, 28px);
+  letter-spacing: -0.03em;
+  color: var(--blue);
+}
+
+.a-body p {
+  margin-top: 8px;
+  font-size: 14px;
+  font-weight: 500;
+  letter-spacing: 0.02em;
+  text-transform: uppercase;
+  color: rgba(0,39,186,.55);
+}
+
+.agenda-row.is-break { background: var(--pink); border-radius: var(--radius-sm); border-bottom-color: transparent; }
+.agenda-row.is-break .a-body h4 { color: var(--blue); }
+.agenda-row.is-break .a-time { color: rgba(0,39,186,.6); }
+
+.agenda-note {
+  margin-top: 32px;
+  font-size: 14px;
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
+  color: rgba(0,39,186,.6);
+}
+
+/* ============================================================
+   EVENT ESSENTIALS — růžová karta s HLAVNÍMI BODY a statistikami
+   (věrně podle sekce OUR EVENT ESSENTIALS v šabloně)
+   ============================================================ */
+.essentials {
+  margin-top: 110px;
+  background: var(--pink);
+  border-radius: var(--radius);
+  padding: 40px 36px 36px;
+  display: flex;
+  flex-direction: column;
+  gap: 26px;
+}
+
+.ess-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  gap: 40px;
+  flex-wrap: wrap;
+  margin-bottom: 14px;
+}
+
+.ess-top .section-tag { margin-bottom: 22px; }
+
+/* vnitřní karta s hlavními body — světlejší růžová */
+.ess-features {
+  background: rgba(255,255,255,.28);
+  border-radius: var(--radius-sm);
+  padding: 30px 32px 36px;
+}
+
+.ess-label {
+  display: block;
+  font-size: 22px;
+  text-transform: uppercase;
+  letter-spacing: -0.03em;
+  color: var(--blue);
+  margin-bottom: 34px;
+}
+
+.ess-feature-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 40px;
+}
+
+.ess-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 30px;
+  height: 30px;
+  border-radius: 8px;
+  background: var(--blue);
+  color: var(--pink);
+  margin-bottom: 16px;
+}
+.ess-icon svg { width: 16px; height: 16px; }
+
+.ess-feature h4 {
+  font-size: 15px;
+  font-weight: 500;
+  letter-spacing: 0.02em;
+  margin-bottom: 10px;
+  color: var(--blue);
+}
+
+.ess-feature p {
+  font-size: 13.5px;
+  line-height: 1.55;
+  color: rgba(0,39,186,.75);
+}
+
+/* statistiky — světlejší růžové karty s velkým číslem */
+.ess-stats {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: var(--gap);
+}
+
+.ess-stat {
+  background: rgba(255,255,255,.28);
+  border-radius: var(--radius-sm);
+  padding: 28px 28px 30px;
+  min-height: 260px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.stat-num {
+  font-size: clamp(48px, 4.6vw, 76px);
+  line-height: .9;
+  letter-spacing: -0.05em;
+  color: var(--blue);
+}
+
+.stat-label {
+  font-size: 14px;
+  font-weight: 500;
+  letter-spacing: 0.03em;
+  text-transform: uppercase;
+  color: var(--blue);
+}
+
+/* ============================================================
+   VSTUPENKY / CENY
+   ============================================================ */
+.pricing {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: var(--gap);
+}
+
+.price-card {
+  position: relative;
+  background: var(--blue);
+  border-radius: var(--radius);
+  padding: 40px 36px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 18px;
+  color: var(--pink);
+  overflow: hidden;
+}
+
+.price-card-late { background: var(--pink); color: var(--blue); }
+
+.price-tag {
+  font-size: 14px;
+  font-weight: 500;
+  letter-spacing: 0.04em;
+  border: 1px solid currentColor;
+  border-radius: 999px;
+  padding: 8px 18px;
+  text-transform: uppercase;
+}
+
+.price-value {
+  font-size: clamp(56px, 6vw, 92px);
+  letter-spacing: -0.05em;
+  line-height: .9;
+  text-transform: uppercase;
+}
+
+.price-card p { font-size: 15px; opacity: .8; }
+
+/* ============================================================
+   FAQ
+   ============================================================ */
+.faq-list { border-top: 1px solid rgba(0,39,186,.25); }
+
+.faq-item { border-bottom: 1px solid rgba(0,39,186,.25); }
+
+.faq-item summary {
+  list-style: none;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 24px;
+  cursor: pointer;
+  padding: 30px 8px;
+  font-size: clamp(20px, 2.2vw, 30px);
+  text-transform: uppercase;
+  letter-spacing: -0.03em;
+  color: var(--blue);
+  transition: background .25s ease;
+}
+.faq-item summary::-webkit-details-marker { display: none; }
+.faq-item summary:hover { background: rgba(0,39,186,.05); }
+
+.faq-icon {
+  font-size: 30px;
+  line-height: 1;
+  transition: transform .3s ease;
+}
+.faq-item[open] .faq-icon { transform: rotate(45deg); }
+
+.faq-item p {
+  padding: 0 8px 30px;
+  max-width: 760px;
+  font-size: 15px;
+  line-height: 1.6;
+  color: rgba(0,39,186,.75);
+}
+
+/* ============================================================
+   ARCHIV
+   ============================================================ */
+.past-list { border-top: 1px solid rgba(0,39,186,.25); }
+
+.past-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 24px;
+  padding: 30px 8px;
+  border-bottom: 1px solid rgba(0,39,186,.25);
+  text-decoration: none;
+  transition: background .25s ease;
+}
+.past-row:hover { background: rgba(0,39,186,.05); }
+
+.past-title {
+  font-size: clamp(26px, 3vw, 44px);
+  text-transform: uppercase;
+  letter-spacing: -0.04em;
+  color: var(--blue);
+}
+
+/* ============================================================
+   KONTAKT
+   ============================================================ */
+.contact-section { padding-bottom: 0; }
+
+.contact-grid {
+  background: var(--blue);
+  border-radius: var(--radius);
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 48px;
+  padding: 56px;
+}
+
+.contact-info h2 { margin-bottom: 40px; }
+
+.contact-links {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 12px;
+}
+
+.contact-note {
+  margin-top: 36px;
+  font-size: 14px;
+  line-height: 1.6;
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
+  color: rgba(255,179,193,.65);
+}
+
+.contact-form {
+  background: var(--bg);
+  border-radius: var(--radius-sm);
+  padding: 36px;
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+
+.contact-form h3 {
+  font-size: clamp(22px, 2vw, 30px);
+  margin-bottom: 6px;
+}
+
+.contact-form label {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  font-size: 12px;
+  font-weight: 500;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  color: rgba(0,39,186,.6);
+}
+
+.contact-form input,
+.contact-form select,
+.contact-form textarea {
+  font-family: var(--font);
+  font-size: 15px;
+  color: var(--blue);
+  background: var(--white);
+  border: 1px solid rgba(0,39,186,.25);
+  border-radius: 10px;
+  padding: 13px 16px;
+  outline: none;
+  transition: border-color .25s ease;
+}
+.contact-form input:focus,
+.contact-form select:focus,
+.contact-form textarea:focus { border-color: var(--blue); }
+
+.contact-form textarea { resize: vertical; }
+
+.contact-form .btn { align-self: flex-start; margin-top: 6px; }
+
+/* ============================================================
+   FOOTER
+   ============================================================ */
+.footer {
+  margin-top: var(--gap);
+  background: var(--navy);
+  border-radius: var(--radius);
+  padding: 56px 56px 40px;
+  color: var(--pink);
+}
+
+.footer-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 40px;
+  padding-bottom: 48px;
+  border-bottom: 1px solid rgba(255,179,193,.2);
+  flex-wrap: wrap;
+}
+
+.footer-logo {
+  font-size: clamp(40px, 5vw, 72px);
+  text-transform: uppercase;
+  letter-spacing: -0.05em;
+}
+
+.footer-claim {
+  max-width: 420px;
+  font-size: 14px;
+  line-height: 1.6;
+  letter-spacing: 0.02em;
+  color: rgba(255,179,193,.7);
+}
+
+.footer-bottom {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 24px;
+  padding-top: 32px;
+  flex-wrap: wrap;
+  font-size: 13px;
+  letter-spacing: 0.03em;
+  text-transform: uppercase;
+  color: rgba(255,179,193,.6);
+}
+
+.footer-nav { display: flex; gap: 22px; }
+
+.footer-nav a {
+  color: var(--pink);
+  text-decoration: none;
+  font-size: 13px;
+  font-weight: 500;
+  transition: opacity .25s ease;
+}
+.footer-nav a:hover { opacity: .7; }
+
+/* ============================================================
+   RESPONSIVITA
+   ============================================================ */
+@media (max-width: 1100px) {
+  .layout { grid-template-columns: 1fr; }
+  .hero-card { min-height: auto; }
+  .side-sticky {
+    position: static;
+    height: auto;
+    flex-direction: row;
+    flex-wrap: wrap;
+    margin-top: var(--gap);
+  }
+  .side-agenda { flex: 1 1 300px; }
+  .ticket-unit { flex: 1 1 300px; }
+  .speakers-grid { grid-template-columns: repeat(2, 1fr); }
+  .contact-grid { grid-template-columns: 1fr; padding: 36px; }
+  .partner-logos { grid-template-columns: repeat(2, 1fr); }
+}
+
+@media (max-width: 760px) {
+  .nav-pill { display: none; }
+  .info-tiles, .pricing, .speakers-grid,
+  .ess-feature-grid, .ess-stats, .partner-logos { grid-template-columns: 1fr; }
+  .ess-stat { min-height: 180px; }
+  .agenda-row { grid-template-columns: 1fr; gap: 8px; }
+  .about-row { grid-template-columns: 1fr; gap: 12px; }
+  .section { padding: 70px 12px 20px; }
+  .section-slim { padding: 70px 12px 10px; }
+  .partners-block, .essentials { margin-top: 70px; }
+  .partners-card { padding: 28px 24px 32px; }
+  .essentials { padding: 28px 20px 24px; }
+  .hero-title { font-size: clamp(44px, 13vw, 90px); }
+  .footer { padding: 36px 24px; }
+  .contact-grid { padding: 24px; }
+}
