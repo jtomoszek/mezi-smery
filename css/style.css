@@ -339,6 +339,150 @@ h2.light { color: var(--pink); }
 .side-ticket:hover .ticket-label { letter-spacing: 0; }
 
 /* ============================================================
+   STRÁNKA O NÁS
+   ============================================================ */
+.nav-pill a.active { background: var(--blue); color: var(--pink); }
+
+.hero-about { min-height: calc(72dvh); }
+
+.hero-title-sm { font-size: clamp(48px, 7.4vw, 124px); }
+
+/* velká foto karta pod hero */
+.photo-card {
+  margin-top: var(--gap);
+  border-radius: var(--radius);
+  overflow: hidden;
+}
+
+/* placeholder pro dodané fotky — stačí nahradit <img src="…"> */
+.ph {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  width: 100%;
+  background:
+    repeating-linear-gradient(115deg, rgba(0,39,186,.04) 0 20px, rgba(0,39,186,.09) 20px 40px),
+    #E9ECF5;
+  border: 1.5px dashed rgba(0,39,186,.35);
+  border-radius: var(--radius-sm);
+  color: rgba(0,39,186,.55);
+  font-size: 12px;
+  font-weight: 500;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  text-align: center;
+  padding: 18px;
+}
+.ph svg { width: 28px; height: 28px; }
+
+.ph-hero { aspect-ratio: 16 / 7; border-radius: var(--radius); border: 0; }
+.ph-square { aspect-ratio: 4 / 3; }
+.ph-portrait { aspect-ratio: 3 / 4; }
+.ph-strip { aspect-ratio: 4 / 3; }
+
+/* modrá intro karta s hvězdou */
+.about-intro {
+  margin-top: var(--gap);
+  background: var(--blue);
+  border-radius: var(--radius);
+  padding: 52px 48px;
+  display: grid;
+  grid-template-columns: 90px 1fr;
+  gap: 36px;
+  align-items: start;
+}
+
+.spark { color: var(--pink); }
+.spark svg { width: 64px; height: 64px; }
+
+.about-intro-body h3 {
+  font-size: clamp(22px, 2.3vw, 34px);
+  color: var(--pink);
+  letter-spacing: -0.03em;
+  line-height: 1.05;
+  margin-bottom: 34px;
+}
+
+.intro-list {
+  list-style: none;
+  margin-bottom: 34px;
+}
+
+.intro-list li {
+  padding: 18px 4px;
+  border-top: 1px solid rgba(255,179,193,.3);
+  font-size: clamp(18px, 1.6vw, 24px);
+  text-transform: uppercase;
+  letter-spacing: -0.02em;
+  color: var(--pink);
+}
+.intro-list li:last-child { border-bottom: 1px solid rgba(255,179,193,.3); }
+
+/* řádky 01/02/03 s místem pro fotku */
+.about-row.with-photo {
+  grid-template-columns: 140px 1fr 300px;
+  align-items: center;
+}
+.about-row.with-photo .ph { max-width: 300px; }
+
+/* citát garantky */
+.quote-card {
+  background: var(--pink);
+  border-radius: var(--radius);
+  padding: 48px;
+  display: grid;
+  grid-template-columns: 280px 1fr;
+  gap: 48px;
+  align-items: center;
+}
+
+.quote-card .ph {
+  background:
+    repeating-linear-gradient(115deg, rgba(0,39,186,.06) 0 20px, rgba(0,39,186,.12) 20px 40px),
+    rgba(255,255,255,.45);
+}
+
+.quote-text {
+  font-size: clamp(22px, 2.3vw, 34px);
+  line-height: 1.15;
+  letter-spacing: -0.02em;
+  color: var(--blue);
+  margin-bottom: 30px;
+}
+
+.quote-card cite {
+  font-style: normal;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.quote-name {
+  font-size: 18px;
+  text-transform: uppercase;
+  letter-spacing: -0.02em;
+  color: var(--blue);
+}
+
+.quote-role {
+  font-size: 13px;
+  font-weight: 500;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: rgba(0,39,186,.55);
+}
+
+/* pás tří fotek */
+.photo-strip {
+  margin-top: 110px;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: var(--gap);
+}
+
+/* ============================================================
    INFO DLAŽDICE
    ============================================================ */
 .info-tiles {
@@ -1019,6 +1163,10 @@ h2.light { color: var(--pink); }
   .speakers-grid { grid-template-columns: repeat(2, 1fr); }
   .contact-grid { grid-template-columns: 1fr; padding: 36px; }
   .partner-logos { grid-template-columns: repeat(2, 1fr); }
+  .about-row.with-photo { grid-template-columns: 100px 1fr; }
+  .about-row.with-photo .ph { grid-column: 2; max-width: 420px; }
+  .quote-card { grid-template-columns: 1fr; }
+  .quote-card .ph { max-width: 320px; }
 }
 
 @media (max-width: 760px) {
@@ -1036,4 +1184,10 @@ h2.light { color: var(--pink); }
   .hero-title { font-size: clamp(44px, 13vw, 90px); }
   .footer { padding: 36px 24px; }
   .contact-grid { padding: 24px; }
+  .about-intro { grid-template-columns: 1fr; padding: 28px 24px; }
+  .spark svg { width: 44px; height: 44px; }
+  .about-row.with-photo { grid-template-columns: 1fr; }
+  .about-row.with-photo .ph { grid-column: 1; }
+  .quote-card { padding: 24px; }
+  .photo-strip { margin-top: 70px; grid-template-columns: 1fr; }
 }
