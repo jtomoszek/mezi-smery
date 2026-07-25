@@ -8,7 +8,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="css/style.css?v=5">
+  <link rel="stylesheet" href="css/style.css?v=6">
   <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='6' fill='%230027BA'/%3E%3Ctext x='16' y='22' font-family='sans-serif' font-size='14' fill='%23FFB3C1' text-anchor='middle'%3EM/S%3C/text%3E%3C/svg%3E">
 </head>
 <body>
@@ -253,12 +253,12 @@
   <section class="section contact-section" id="kontakt">
     <div class="contact-grid">
       <div class="contact-info">
-        <p class="section-tag light reveal">[ KONTAKT ]</p>
-        <h2 class="light reveal">SPOJTE SE<br>S NÁMI</h2>
+        <p class="section-tag reveal">[ KONTAKT ]</p>
+        <h2 class="reveal">SPOJTE SE<br>S NÁMI</h2>
         <div class="contact-links">
-          <a class="btn btn-outline-light reveal" href="mailto:vanek@4educa.cz">VANEK@4EDUCA.CZ</a>
-          <a class="btn btn-outline-light reveal" href="tel:+420604289352">+420 604 289 352</a>
-          <a class="btn btn-outline-light reveal" href="https://www.4educa.cz" target="_blank" rel="noopener">WWW.4EDUCA.CZ</a>
+          <a class="btn btn-blue reveal" href="mailto:vanek@4educa.cz">VANEK@4EDUCA.CZ</a>
+          <a class="btn btn-blue reveal" href="tel:+420604289352">+420 604 289 352</a>
+          <a class="btn btn-blue reveal" href="https://www.4educa.cz" target="_blank" rel="noopener">WWW.4EDUCA.CZ</a>
         </div>
         <p class="contact-note reveal">Event manager: Petr Vaněk<br>4Education s.r.o.</p>
       </div>
@@ -272,7 +272,8 @@
           <input type="email" name="email" placeholder="vas@email.cz" required>
         </label>
         <label>TYP DOTAZU
-          <select name="typ">
+          <select name="typ" required>
+            <option value="" disabled selected>Vyberte téma</option>
             <option>Registrace a platby</option>
             <option>Ubytování</option>
             <option>Program a kredity</option>
@@ -281,9 +282,9 @@
           </select>
         </label>
         <label>ZPRÁVA
-          <textarea name="zprava" rows="4" placeholder="Vaše zpráva…"></textarea>
+          <textarea name="zprava" rows="5" placeholder="S čím vám můžeme pomoci?"></textarea>
         </label>
-        <button class="btn btn-blue" type="submit">ODESLAT ZPRÁVU <span class="arr">↗</span></button>
+        <button class="btn btn-outline-light btn-full" type="submit">ODESLAT ZPRÁVU</button>
       </form>
     </div>
   </section>

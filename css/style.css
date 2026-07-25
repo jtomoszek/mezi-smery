@@ -1013,8 +1013,9 @@ h2.light { color: var(--pink); }
    ============================================================ */
 .contact-section { padding-bottom: 0; }
 
+/* růžová karta s modrým formulářem — přesně podle šablony */
 .contact-grid {
-  background: var(--blue);
+  background: var(--pink);
   border-radius: var(--radius);
   display: grid;
   grid-template-columns: 1fr 1fr;
@@ -1022,14 +1023,16 @@ h2.light { color: var(--pink); }
   padding: 56px;
 }
 
-.contact-info h2 { margin-bottom: 40px; }
+.contact-info h2 { margin-bottom: 44px; }
 
 .contact-links {
   display: flex;
-  flex-direction: column;
+  flex-wrap: wrap;
   align-items: flex-start;
   gap: 12px;
 }
+
+.contact-links .btn { font-size: clamp(16px, 1.4vw, 22px); padding: 18px 30px; }
 
 .contact-note {
   margin-top: 36px;
@@ -1037,54 +1040,77 @@ h2.light { color: var(--pink); }
   line-height: 1.6;
   text-transform: uppercase;
   letter-spacing: 0.03em;
-  color: rgba(255,179,193,.65);
+  color: rgba(0,39,186,.6);
 }
 
 .contact-form {
-  background: var(--bg);
+  background: var(--blue);
   border-radius: var(--radius-sm);
-  padding: 36px;
+  padding: 40px;
   display: flex;
   flex-direction: column;
-  gap: 18px;
+  gap: 22px;
 }
 
 .contact-form h3 {
-  font-size: clamp(22px, 2vw, 30px);
-  margin-bottom: 6px;
+  font-size: clamp(24px, 2.2vw, 34px);
+  color: var(--pink);
+  margin-bottom: 10px;
 }
 
 .contact-form label {
   display: flex;
   flex-direction: column;
-  gap: 8px;
+  gap: 10px;
   font-size: 12px;
   font-weight: 500;
   letter-spacing: 0.05em;
   text-transform: uppercase;
-  color: rgba(0,39,186,.6);
+  color: rgba(255,179,193,.75);
 }
 
 .contact-form input,
 .contact-form select,
 .contact-form textarea {
   font-family: var(--font);
-  font-size: 15px;
-  color: var(--blue);
-  background: var(--white);
-  border: 1px solid rgba(0,39,186,.25);
+  font-size: 16px;
+  color: var(--pink);
+  background: transparent;
+  border: 1px solid rgba(255,179,193,.35);
   border-radius: 10px;
-  padding: 13px 16px;
+  padding: 16px 18px;
   outline: none;
   transition: border-color .25s ease;
 }
+
+.contact-form input::placeholder,
+.contact-form textarea::placeholder { color: rgba(255,179,193,.45); }
+
 .contact-form input:focus,
 .contact-form select:focus,
-.contact-form textarea:focus { border-color: var(--blue); }
+.contact-form textarea:focus { border-color: var(--pink); }
 
-.contact-form textarea { resize: vertical; }
+.contact-form select {
+  appearance: none;
+  -webkit-appearance: none;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='14' height='9' viewBox='0 0 14 9'%3E%3Cpath d='M1 1l6 6 6-6' fill='none' stroke='%23FFB3C1' stroke-width='2' stroke-linecap='round'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 18px center;
+  padding-right: 44px;
+}
+.contact-form select option { color: var(--blue); background: var(--white); }
+.contact-form select:invalid,
+.contact-form select.is-empty { color: rgba(255,179,193,.45); }
 
-.contact-form .btn { align-self: flex-start; margin-top: 6px; }
+.contact-form textarea { resize: vertical; min-height: 190px; }
+
+.contact-form .btn-full {
+  width: 100%;
+  justify-content: center;
+  margin-top: 10px;
+  padding: 19px 26px;
+  font-size: 15px;
+}
 
 /* ============================================================
    FOOTER
