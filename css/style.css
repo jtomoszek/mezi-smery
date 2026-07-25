@@ -693,12 +693,27 @@ h2.light { color: var(--pink); }
   color: rgba(255,179,193,.8);
 }
 
+/* úrovně partnerství */
+.partner-tier { display: flex; flex-direction: column; gap: 12px; }
+
+.tier-label {
+  font-size: 13px;
+  font-weight: 500;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--blue);
+  padding: 8px 4px 0;
+}
+
 .partner-logos {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
   gap: var(--gap);
 }
 
+.partner-logos.tier-solo { grid-template-columns: 1fr; }
+
+/* bílá jednobarevná loga na modrých dlaždicích */
 .partner-tile {
   background: var(--blue);
   border-radius: var(--radius);
@@ -706,16 +721,22 @@ h2.light { color: var(--pink); }
   display: flex;
   align-items: center;
   justify-content: center;
-  color: var(--pink);
+  color: var(--white);
   transition: background .3s ease;
 }
 .partner-tile:hover { background: var(--blue-dark); }
 
 .partner-tile svg {
   width: 100%;
-  max-width: 190px;
+  max-width: 200px;
   height: auto;
 }
+
+.tile-gold { min-height: 210px; }
+.tile-gold svg { max-width: 360px; }
+
+.tile-silver { min-height: 160px; }
+.tile-silver svg { max-width: 300px; }
 
 /* ============================================================
    PROGRAM
