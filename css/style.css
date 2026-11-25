@@ -444,6 +444,14 @@ h2.light { color: var(--pink); }
     rgba(255,255,255,.45);
 }
 
+.quote-photo {
+  width: 100%;
+  aspect-ratio: 3 / 4;
+  object-fit: cover;
+  border-radius: var(--radius-sm);
+  display: block;
+}
+
 .quote-text {
   font-size: clamp(22px, 2.3vw, 34px);
   line-height: 1.15;
