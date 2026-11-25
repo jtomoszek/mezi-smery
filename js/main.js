@@ -53,6 +53,39 @@ dayButtons.forEach((btn) => {
   });
 });
 
+// Lightbox pro galerie (fotky odkazované z .g-item)
+const gItems = [...document.querySelectorAll('.g-item')];
+if (gItems.length) {
+  const lb = document.createElement('div');
+  lb.className = 'lightbox';
+  lb.innerHTML = '<button class="lb-btn lb-close" aria-label="Zavřít">✕</button>' +
+    '<button class="lb-btn lb-prev" aria-label="Předchozí">←</button>' +
+    '<img alt="Fotografie z akce">' +
+    '<button class="lb-btn lb-next" aria-label="Další">→</button>';
+  document.body.appendChild(lb);
+  const img = lb.querySelector('img');
+  let idx = 0;
+
+  const show = (i) => {
+    idx = (i + gItems.length) % gItems.length;
+    img.src = gItems[idx].getAttribute('href');
+    lb.classList.add('open');
+  };
+  const close = () => lb.classList.remove('open');
+
+  gItems.forEach((a, i) => a.addEventListener('click', (e) => { e.preventDefault(); show(i); }));
+  lb.querySelector('.lb-close').addEventListener('click', close);
+  lb.querySelector('.lb-prev').addEventListener('click', () => show(idx - 1));
+  lb.querySelector('.lb-next').addEventListener('click', () => show(idx + 1));
+  lb.addEventListener('click', (e) => { if (e.target === lb) close(); });
+  document.addEventListener('keydown', (e) => {
+    if (!lb.classList.contains('open')) return;
+    if (e.key === 'Escape') close();
+    if (e.key === 'ArrowLeft') show(idx - 1);
+    if (e.key === 'ArrowRight') show(idx + 1);
+  });
+}
+
 // FAQ: nechat otevřenou vždy jen jednu položku
 document.querySelectorAll('.faq-item').forEach((item) => {
   item.addEventListener('toggle', () => {
